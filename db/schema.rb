@@ -12,6 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20170921042329) do
 
+  create_table "invalid_tokens", force: :cascade do |t|
+    t.string   "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "items", force: :cascade do |t|
     t.string   "name"
     t.text     "description"

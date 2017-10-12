@@ -21,6 +21,10 @@ before_action :set_user, only: [:show, :update, :destroy]
     render json: current_user, serializer: UserSerializer
   end
 
+  def logout 
+    response.headers["jwt"] = nil
+    render json: {message: "logout successful"}, status: :ok
+  end
   # POST /users
   def create
     @user = User.new(user_params)
@@ -45,6 +49,22 @@ before_action :set_user, only: [:show, :update, :destroy]
   def destroy
     @user.destroy
   end
+
+  def search    
+    
+    if params.has_key?(:q)
+        @users_name = User.users_by_name("%#{params[:q]}%")
+#       render json: @products, :include => [:product]
+       render json: @users_name, each_serializer:UserSerializer
+            
+    else
+        @users = User.all
+      
+    end
+  end
+
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
