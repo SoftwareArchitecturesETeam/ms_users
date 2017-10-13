@@ -1404,3 +1404,342 @@ puma (3.10.0) lib/puma/server.rb:437:in `process_client'
 puma (3.10.0) lib/puma/server.rb:301:in `block in run'
 puma (3.10.0) lib/puma/thread_pool.rb:120:in `call'
 puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateInvalidTokens (20171007020708)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (19.0ms)[0m  [1m[35mCREATE TABLE "invalid_tokens" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "token" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171007020708"]]
+  [1m[35m (136.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddPhoneToUsers (20171013172341)
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddPhoneToUsers (20171013172341)
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddPhoneToUsers (20171013172341)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (402.0ms)[0m  [1m[35mALTER TABLE "users" ADD "phone" integer[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171013172341"]]
+  [1m[35m (467.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/users" for 127.0.0.1 at 2017-10-13 12:48:15 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Andrea", "last_name"=>"garcia", "email"=>"andrea@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Andrea"], ["last_name", "garcia"], ["age", "22"], ["email", "andrea@mail.com"], ["password_digest", "$2a$10$/5NZDvorNO7e7dN0vlPi5uQHiaLtDzCH7l23zbGKmlc/LbM4Zx/O."], ["created_at", "2017-10-13 17:48:21.210393"], ["updated_at", "2017-10-13 17:48:21.210393"]]
+  [1m[35m (1276.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 500 Internal Server Error in 6203ms (ActiveRecord: 1277.1ms)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'verification_code' for User.):
+  
+lib/confirmation_sender.rb:4:in `send_confirmation_to'
+app/controllers/users_controller.rb:37:in `create'
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to UpdateColumn (20171013180445)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ausers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "age" varchar, "email" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "phone" integer)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "ausers" ("id","first_name","last_name","age","email","password_digest","created_at","updated_at","phone")
+                     SELECT "id","first_name","last_name","age","email","password_digest","created_at","updated_at","phone" FROM "users"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "age" varchar, "email" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "phone" varchar)[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "users" ("id","first_name","last_name","age","email","password_digest","created_at","updated_at","phone")
+                     SELECT "id","first_name","last_name","age","email","password_digest","created_at","updated_at","phone" FROM "ausers"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "ausers"[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171013180445"]]
+  [1m[35m (3104.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:06:50 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$beq5S2dPYYNctHSAp56Iye44pxFLSc1PZkL9NepetYT7jRxo7p46."], ["created_at", "2017-10-13 18:06:56.465559"], ["updated_at", "2017-10-13 18:06:56.465559"], ["phone", "+573112899423"]]
+  [1m[35m (1187.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 500 Internal Server Error in 6006ms (ActiveRecord: 1189.1ms)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'verification_code' for User.):
+  
+lib/confirmation_sender.rb:4:in `send_confirmation_to'
+app/controllers/users_controller.rb:37:in `create'
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddverificationCodeToUsers (20171013181432)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "users" ADD "verification_code" varchar[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171013181432"]]
+  [1m[35m (1990.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:16:07 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$iRYwyyvOxSTkgG9K964G5e9jhazGFjPkup/aaHC3UExNNJm4hqemi"], ["created_at", "2017-10-13 18:16:13.152400"], ["updated_at", "2017-10-13 18:16:13.152400"], ["phone", "+573112899423"]]
+  [1m[35m (109.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:16:13.287407"], ["verification_code", "547932"], ["id", 21]]
+  [1m[35m (171.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 5069ms (ActiveRecord: 284.0ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:5:in `send_confirmation_to'
+app/controllers/users_controller.rb:37:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:28:21 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$SkxXzVN6TXD1s4XbTN3dhew.sUrdUkkx8uqEFloOI4BBX8usjk9gW"], ["created_at", "2017-10-13 18:28:26.800362"], ["updated_at", "2017-10-13 18:28:26.800362"], ["phone", "+573112899423"]]
+  [1m[35m (3499.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:28:30.321563"], ["verification_code", "591362"], ["id", 22]]
+  [1m[35m (270.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 8487ms (ActiveRecord: 3772.2ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:5:in `send_confirmation_to'
+app/controllers/users_controller.rb:37:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:37:44 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$Y0jNlw3gH7AR7GDpHOdFluA5LzusbLhwrKo7NWSmHJB3.FZ0PIsFy"], ["created_at", "2017-10-13 18:37:49.507066"], ["updated_at", "2017-10-13 18:37:49.507066"], ["phone", "+573112899423"]]
+  [1m[35m (3390.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:37:52.919261"], ["verification_code", "330924"], ["id", 23]]
+  [1m[35m (162.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 8335ms (ActiveRecord: 3557.2ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:5:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:40:26 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$PMJDvH9naUbgHMU8ivCdkebkgEtYlvI2K0YeM4M4OEBQ0hB8OwWuO"], ["created_at", "2017-10-13 18:40:33.955471"], ["updated_at", "2017-10-13 18:40:33.955471"], ["phone", "+573112899423"]]
+  [1m[35m (163.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (3.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:40:34.142482"], ["verification_code", "892444"], ["id", 24]]
+  [1m[35m (161.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 5068ms (ActiveRecord: 329.0ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:6:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:41:29 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$qABRNc2B./2wuxrB4iu2UORqftDh1/v5SOx/9NIN871CI76OLAORu"], ["created_at", "2017-10-13 18:41:35.022964"], ["updated_at", "2017-10-13 18:41:35.022964"], ["phone", "+573112899423"]]
+  [1m[35m (3572.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:41:38.616170"], ["verification_code", "259445"], ["id", 25]]
+  [1m[35m (161.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 8445ms (ActiveRecord: 3737.2ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:6:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:42:47 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$celsfYMu8sIU2KiKrs1a8e3o9fad2NJyBuZWVrcCf6KK3seHLAWXC"], ["created_at", "2017-10-13 18:42:52.549399"], ["updated_at", "2017-10-13 18:42:52.549399"], ["phone", "+573112899423"]]
+  [1m[35m (1437.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:42:54.004482"], ["verification_code", "571383"], ["id", 26]]
+  [1m[35m (149.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 6284ms (ActiveRecord: 1590.1ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:6:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:44:09 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$pabaZn/bzol6UTlKS8cnouP8ySiw9pO7HD4vHdAlNBZ5R1crN5pBS"], ["created_at", "2017-10-13 18:44:14.979113"], ["updated_at", "2017-10-13 18:44:14.979113"], ["phone", "+573112899423"]]
+  [1m[35m (3059.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:44:18.063290"], ["verification_code", "326882"], ["id", 27]]
+  [1m[35m (225.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 7993ms (ActiveRecord: 3288.2ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:6:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:46:31 -0500
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$3XYn4CsiaSttcIPPDKBcp.PIZzdtlYyZiXisRJpZVizD931UbIHXK"], ["created_at", "2017-10-13 18:46:41.271481"], ["updated_at", "2017-10-13 18:46:41.271481"], ["phone", "+573112899423"]]
+  [1m[35m (1381.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:46:42.675561"], ["verification_code", "762374"], ["id", 28]]
+  [1m[35m (257.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 1775ms (ActiveRecord: 1644.1ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:6:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:47:09 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (1.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$c695v1hUKerpjOQlT6Ti9.MI6cbGeh19y5AZpttKFkZ993vareSrO"], ["created_at", "2017-10-13 18:47:17.400547"], ["updated_at", "2017-10-13 18:47:17.400547"], ["phone", "+573112899423"]]
+  [1m[35m (2852.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:47:20.276712"], ["verification_code", "641659"], ["id", 29]]
+  [1m[35m (131.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 7763ms (ActiveRecord: 2989.2ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:6:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:48:47 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$4yGLK1gWb9gtVkUohzReROMRrpfFf1qTaL5BPyB3MEKMW0OtODhuu"], ["created_at", "2017-10-13 18:48:54.327091"], ["updated_at", "2017-10-13 18:48:54.327091"], ["phone", "+573112899423"]]
+  [1m[35m (1613.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (3.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:48:55.964185"], ["verification_code", "910969"], ["id", 30]]
+  [1m[35m (211.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 6607ms (ActiveRecord: 1829.1ms)
+
+
+  
+NameError (uninitialized constant ConfirmationSender::MessageSender):
+  
+lib/confirmation_sender.rb:8:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:50:37 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$YwxWPS5Q6oUremF4GESsxeL3VZmYPUP.w7gQR4IQ1LwGJOMgYr/Aq"], ["created_at", "2017-10-13 18:50:45.369442"], ["updated_at", "2017-10-13 18:50:45.369442"], ["phone", "+573112899423"]]
+  [1m[35m (3578.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:50:48.972648"], ["verification_code", "586637"], ["id", 31]]
+  [1m[35m (243.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 8588ms (ActiveRecord: 3824.2ms)
+
+
+  
+ArgumentError (Account SID and auth token are required):
+  
+lib/message_sender.rb:8:in `new'
+lib/message_sender.rb:8:in `send_code'
+lib/confirmation_sender.rb:8:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 13:52:19 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$sL/IvLwwv3nXNML87U/1W.jzchK6cijOx.E0YghmU9I.clNK/0PIW"], ["created_at", "2017-10-13 18:52:24.960139"], ["updated_at", "2017-10-13 18:52:24.960139"], ["phone", "+573112899423"]]
+  [1m[35m (3138.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 18:52:28.123320"], ["verification_code", "399459"], ["id", 32]]
+  [1m[35m (158.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 8045ms (ActiveRecord: 3301.2ms)
+
+
+  
+ArgumentError (Account SID and auth token are required):
+  
+lib/message_sender.rb:8:in `new'
+lib/message_sender.rb:8:in `send_code'
+lib/confirmation_sender.rb:8:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 14:03:02 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$MszMJYdYFt1PmUxOOYb.6OGjqGTYy3s3oNqV6VnXyuEkyw1sbAcb."], ["created_at", "2017-10-13 19:03:07.983077"], ["updated_at", "2017-10-13 19:03:07.983077"], ["phone", "+573112899423"]]
+  [1m[35m (2865.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (3.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 19:03:10.871242"], ["verification_code", "223457"], ["id", 33]]
+  [1m[35m (182.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 7804ms (ActiveRecord: 3052.2ms)
+
+
+  
+ArgumentError (Account SID and auth token are required):
+  
+lib/message_sender.rb:8:in `new'
+lib/message_sender.rb:8:in `send_code'
+lib/confirmation_sender.rb:8:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'
+Started POST "/users" for 127.0.0.1 at 2017-10-13 14:10:08 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"first_name"=>"Sebastian", "last_name"=>"Pardo", "email"=>"sebastian@mail.com", "age"=>22, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "phone"=>"+573112899423"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "age", "email", "password_digest", "created_at", "updated_at", "phone") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Sebastian"], ["last_name", "Pardo"], ["age", "22"], ["email", "sebastian@mail.com"], ["password_digest", "$2a$10$EjFYvq1JFYXQdfU4MQ4Vku6It68b8TzOuVoesU6dHB/ivqyH0HMCy"], ["created_at", "2017-10-13 19:10:13.844958"], ["updated_at", "2017-10-13 19:10:13.844958"], ["phone", "+573112899423"]]
+  [1m[35m (1982.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (3.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "verification_code" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2017-10-13 19:10:15.850073"], ["verification_code", "313045"], ["id", 34]]
+  [1m[35m (170.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 6958ms (ActiveRecord: 2158.1ms)
+
+
+  
+ArgumentError (Account SID and auth token are required):
+  
+lib/message_sender.rb:8:in `new'
+lib/message_sender.rb:8:in `send_code'
+lib/confirmation_sender.rb:8:in `send_confirmation_to'
+app/controllers/users_controller.rb:42:in `create'

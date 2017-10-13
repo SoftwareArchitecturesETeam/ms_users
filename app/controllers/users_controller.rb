@@ -1,8 +1,16 @@
 class UsersController < ApplicationController
-before_action :set_user, only: [:show, :update, :destroy]
+
+
+
+  before_action :set_user, only: [:show, :update, :destroy]
   #before_action :authenticate_user, except:[:index]
   skip_before_action :authenticate_request, only:[:create]
   # GET /users
+
+  def new
+    @user = User.new
+  end
+
   def index
     @users = User.all
 
@@ -30,6 +38,9 @@ before_action :set_user, only: [:show, :update, :destroy]
     @user = User.new(user_params)
 
     if @user.save
+      session[:user_id] = @user.id
+      ConfirmationSender.send_confirmation_to(@user)
+      redirect_to new_confirmation_path
       render json: @user, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -73,6 +84,6 @@ before_action :set_user, only: [:show, :update, :destroy]
     end
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :age, :password, :password_confirmation)
+      params.require(:user).permit(:first_name, :last_name, :email, :age, :password, :password_confirmation, :phone)
     end
 end

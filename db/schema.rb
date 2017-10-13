@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921042329) do
+ActiveRecord::Schema.define(version: 20171013181432) do
 
   create_table "invalid_tokens", force: :cascade do |t|
     t.string   "token"
@@ -31,8 +31,10 @@ ActiveRecord::Schema.define(version: 20170921042329) do
     t.string   "age"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "phone"
+    t.string   "verification_code"
   end
 
 end
