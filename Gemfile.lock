@@ -50,6 +50,7 @@ GEM
       activesupport
     concurrent-ruby (1.0.5)
     erubis (2.7.0)
+    execjs (2.7.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.6)
@@ -66,11 +67,13 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     mysql2 (0.4.9-x86-mingw32)
+    net-ldap (0.16.0)
     nio4r (2.1.0)
     nokogiri (1.8.1-x86-mingw32)
       mini_portile2 (~> 2.3.0)
     puma (3.10.0)
     rack (2.0.3)
+    rack-cors (1.0.2)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.6)
@@ -122,9 +125,12 @@ DEPENDENCIES
   active_model_serializers
   bcrypt (~> 3.1.7)
   byebug
+  execjs
   jwt
   mysql2 (>= 0.3.18, < 0.5)
+  net-ldap
   puma (~> 3.0)
+  rack-cors
   rails (~> 5.0.5)
   simple_command
   tzinfo-data
