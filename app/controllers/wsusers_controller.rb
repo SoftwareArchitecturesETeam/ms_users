@@ -1,9 +1,11 @@
 class WsusersController < ApplicationController
+
+  skip_before_action :authenticate_request
   soap_service namespace: 'urn:WashOutUser', camelize_wsdl: :lower
 
   soap_action "check",
               :args => {:email => :string},
-              return => :boolean
+              :return => :boolean
 
   def check
     @req_mail = params[:email]
@@ -12,4 +14,5 @@ class WsusersController < ApplicationController
       exists = true
     end
     render :soap => exists
+  end
 end
