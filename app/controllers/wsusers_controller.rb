@@ -9,10 +9,10 @@ class WsusersController < ApplicationController
 
   def check
     @req_mail = params[:email]
-    exists  = false
-    if (Users.exists?(email: @req_mail))
-      exists = true
+    ex  = false
+    if (User.exists?(email: @req_mail))
+      ex = true
     end
-    render :soap => exists
+    render :soap => ex
   end
 end
