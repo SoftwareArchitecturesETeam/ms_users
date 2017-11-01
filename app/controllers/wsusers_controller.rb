@@ -1,0 +1,2 @@
+class WsusersController < ApplicationController
+end
