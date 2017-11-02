@@ -67,11 +67,12 @@ GEM
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
-    mysql2 (0.4.9)
+    mysql2 (0.3.21)
     net-ldap (0.16.1)
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
+    nori (2.6.0)
     puma (3.10.0)
     rack (2.0.3)
     rack-cors (1.0.2)
@@ -113,6 +114,8 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
+    wash_out (0.12.0)
+      nori (>= 2.0.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -122,16 +125,17 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  bcrypt (~> 3.1.7)
+  bcrypt
   byebug
   jwt
-  mysql2 (>= 0.3.18, < 0.5)
+  mysql2 (= 0.3.21)
   net-ldap
   puma (~> 3.0)
   rack-cors
   rails (~> 5.1.4)
   simple_command
   tzinfo-data
+  wash_out
 
 BUNDLED WITH
    1.16.0.pre.3

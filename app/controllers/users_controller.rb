@@ -3,7 +3,7 @@ require 'net/ldap'
 class UsersController < ApplicationController
 before_action :set_user, only: [:show, :update, :destroy]
   #before_action :authenticate_user, except:[:index]
-  skip_before_action :authenticate_request, only:[:create, :connect]
+  skip_before_action :authenticate_request, only:[:create, :connect, :index]
 
   # GET /users
  def connect
