@@ -1,30 +1,25 @@
 version: '2'
 services:
-  db_autenticateuser:
-    image: mysql
+  db_users:
+    image: mariadb
     ports:
-      - "4000:3306"
+      - "4001:3306"
+    expose:
+      - "4001"
     environment:
-      MYSQL_ROOT_PASSWORD: 123
-      MYSQL_USER: autenticateuser
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: db_users_user
       MYSQL_PASSWORD: 123
-      MYSQL_DATABASE: db_autenticate
-      MYSQL_HOST: db_autenticateuser
-  ms_autenticateuser:
-    build: .
-    command: bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db_autenticateuser
+      MYSQL_DATABASE: db_users_database
+      MYSQL_HOST: db_users
   openldap:
     image: osixia/openldap:1.1.8
     container_name: openldap
     environment:
       COMPOSE_HTTP_TIMEOUT: 200
       LDAP_LOG_LEVEL: "256"
-      LDAP_ORGANISATION: "Software Architecture"
-      LDAP_DOMAIN: "arqsoft.unal.edu.co"
+      LDAP_ORGANISATION: "MapLendar"
+      LDAP_DOMAIN: "maplendar.com"
       LDAP_BASE_DN: ""
       LDAP_ADMIN_PASSWORD: "admin"
       LDAP_CONFIG_PASSWORD: "config"
@@ -53,16 +48,28 @@ services:
       - /etc/ldap/slapd.d
       - /container/service/slapd/assets/certs/
     ports:
-      - "389:389"
+      - "5003:389"
       - "636:636"
-    hostname: "arqsoft.org"
+    hostname: "maplendar.com"
   phpldapadmin:
-      image: osixia/phpldapadmin:latest
-      container_name: phpldapadmin
-      environment:
-        PHPLDAPADMIN_LDAP_HOSTS: "openldap"
-        PHPLDAPADMIN_HTTPS: "false"
-      ports:
-        - "8085:80"
-      links:
-        - openldap
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8085:80"
+    expose:
+      - "8085"
+    depends_on:
+      - openldap
+  ms_users:
+    build: .
+    command: bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - "3001:3000"
+    expose:
+      - "3001"
+    depends_on:
+      - db_users
+      - openldap

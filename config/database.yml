@@ -12,10 +12,10 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS"){ 5 } %>
-  database: db_autenticate
-  username: autenticateuser
+  database: db_users_database
+  username: db_users_user
   password: 123
-  host: db_autenticateuser
+  host: db_users
   socket: /tmp/mysql.sock
 
 development:
