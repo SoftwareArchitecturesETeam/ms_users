@@ -1,0 +1,3 @@
+version: '2'
+sa-ms-users:
+  scale:4
