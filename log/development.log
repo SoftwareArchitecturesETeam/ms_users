@@ -1312,7 +1312,7 @@ Completed 401 Unauthorized in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms)
 
 Started OPTIONS "/authenticate/" for 127.0.0.1 at 2017-10-09 16:17:18 -0500
   
-Mysql2::Error (Unknown MySQL server host 'db_autenticateuser' (0)):
+Mysql2::Error (Unknown MySQL server host 'db_users' (0)):
   
 mysql2-0.4.9-x86 (mingw32) lib/mysql2/client.rb:89:in `connect'
 mysql2-0.4.9-x86 (mingw32) lib/mysql2/client.rb:89:in `initialize'
@@ -1359,7 +1359,7 @@ puma (3.10.0) lib/puma/thread_pool.rb:120:in `call'
 puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
 Started POST "/authenticate" for 127.0.0.1 at 2017-10-09 16:18:33 -0500
   
-Mysql2::Error (Unknown MySQL server host 'db_autenticateuser' (0)):
+Mysql2::Error (Unknown MySQL server host 'db_users' (0)):
   
 mysql2-0.4.9-x86 (mingw32) lib/mysql2/client.rb:89:in `connect'
 mysql2-0.4.9-x86 (mingw32) lib/mysql2/client.rb:89:in `initialize'

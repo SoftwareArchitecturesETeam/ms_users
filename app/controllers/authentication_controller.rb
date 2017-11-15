@@ -6,7 +6,7 @@ skip_before_action :authenticate_request
 			port: 389,
 			auth: {
 				method: :simple,
-				dn: "cn=admin, dc=arqsoft, dc=unal, dc=edu, dc=co",
+				dn: "cn=admin, dc=maplendar, dc=com",
 				password: "admin"
 			}
 		)
@@ -26,7 +26,7 @@ skip_before_action :authenticate_request
         port: 389,
         auth: {
           method: :simple,
-          dn: 'cn=' + email +',ou=Shop,dc=arqsoft,dc=unal,dc=edu,dc=co',
+          dn: 'cn=' + email +',ou=App,dc=arqsoft,dc=unal,dc=edu,dc=co',
           password: password
         }
       )
