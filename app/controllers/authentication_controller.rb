@@ -2,7 +2,7 @@ class AuthenticationController < ApplicationController
 skip_before_action :authenticate_request
 	def connect
 		ldap = Net::LDAP.new(
-			host:'192.168.99.102',
+			host:'openldap.ms-users',
 			port: 389,
 			auth: {
 				method: :simple,
@@ -22,7 +22,7 @@ skip_before_action :authenticate_request
       puts "me conecte"
       ldap = Net::LDAP.new(
 
-        host: '192.168.99.102',
+        host: 'openldap.ms-users',
         port: 389,
         auth: {
           method: :simple,
