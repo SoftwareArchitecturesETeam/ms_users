@@ -15,7 +15,7 @@ default: &default
   database: db_usrs
   username: users
   password: 123
-  host: db_users
+  host: db-users
   socket: /tmp/mysql.sock
 
 development:

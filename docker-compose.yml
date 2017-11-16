@@ -1,25 +1,5 @@
 version: '2'
 services:
-
-  db_users:
-    image: mysql
-    ports:
-      - "4001:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: 123
-      MYSQL_USER: users
-      MYSQL_PASSWORD: 123
-      MYSQL_DATABASE: db_usrs
-      MYSQL_HOST: db_users
-
-  ms_users:
-    build: .
-    command: bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    ports:
-      - "3001:3000"
-    depends_on:
-      - db_users
-
   openldap:
     image: osixia/openldap:1.1.8
     container_name: openldap
@@ -32,8 +12,6 @@ services:
       LDAP_ADMIN_PASSWORD: "admin"
       LDAP_CONFIG_PASSWORD: "config"
       LDAP_READONLY_USER: "false"
-      #LDAP_READONLY_USER_USERNAME: "readonly"
-      #LDAP_READONLY_USER_PASSWORD: "readonly"
       LDAP_BACKEND: "hdb"
       LDAP_TLS: "true"
       LDAP_TLS_CRT_FILENAME: "ldap.crt"
@@ -44,9 +22,6 @@ services:
       LDAP_TLS_PROTOCOL_MIN: "3.1"
       LDAP_TLS_VERIFY_CLIENT: "demand"
       LDAP_REPLICATION: "false"
-      #LDAP_REPLICATION_CONFIG_SYNCPROV: "binddn="cn=admin,cn=config" bindmethod=simple credentials=$LDAP_CONFIG_PASSWORD searchbase="cn=config" type=refreshAndPersist retry="60 +" timeout=1 starttls=critical"
-      #LDAP_REPLICATION_DB_SYNCPROV: "binddn="cn=admin,$LDAP_BASE_DN" bindmethod=simple credentials=$LDAP_ADMIN_PASSWORD searchbase="$LDAP_BASE_DN" type=refreshAndPersist interval=00:00:00:10 retry="60 +" timeout=1 starttls=critical"
-      #LDAP_REPLICATION_HOSTS: "#PYTHON2BASH:['ldap://ldap.example.org','ldap://ldap2.example.org']"
       LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
       LDAP_SSL_HELPER_PREFIX: "ldap"
     tty: true
@@ -58,15 +33,32 @@ services:
     ports:
       - "389:389"
       - "636:636"
-    hostname: "maplendar.org"
-
+    hostname: "maplendar.com"
   phpldapadmin:
-      image: osixia/phpldapadmin:latest
-      container_name: phpldapadmin
-      environment:
-        PHPLDAPADMIN_LDAP_HOSTS: "openldap"
-        PHPLDAPADMIN_HTTPS: "false"
-      ports:
-        - "8085:80"
-      links:
-        - openldap
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8085:80"
+    links:
+      - openldap
+  db-users:
+    image: mysql
+    ports:
+      - "4001:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_USER: users
+      MYSQL_PASSWORD: 123
+      MYSQL_DATABASE: db_usrs
+      MYSQL_HOST: db-users
+  ms-users:
+    build: .
+    command: bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - "3001:3000"
+    depends_on:
+      - openldap
+      - db-users
