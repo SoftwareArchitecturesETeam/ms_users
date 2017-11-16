@@ -1,3 +1,9 @@
 version: '2'
-sa-ms-users:
-  scale:4
+db-users:
+  scale: 4
+ms-users:
+  scale: 4
+openldap:
+  scale: 1
+phpldapadmin:
+  scale: 1
