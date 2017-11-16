@@ -44,11 +44,13 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (7.1.4)
+    bcrypt (3.1.11-x86-mingw32)
     builder (3.2.3)
     case_transform (0.2)
       activesupport
     concurrent-ruby (1.0.5)
     erubis (2.7.0)
+    execjs (2.7.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.6)
@@ -64,12 +66,11 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
-    mysql2 (0.3.21-x86-mingw32)
+    mysql2 (0.4.9-x86-mingw32)
     net-ldap (0.16.0)
     nio4r (2.1.0)
     nokogiri (1.8.1-x86-mingw32)
       mini_portile2 (~> 2.3.0)
-    nori (2.6.0)
     puma (3.10.0)
     rack (2.0.3)
     rack-cors (1.0.2)
@@ -113,8 +114,6 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.2)
       tzinfo (>= 1.0.0)
-    wash_out (0.12.0)
-      nori (>= 2.0.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -124,17 +123,17 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  bcrypt
+  bcrypt (~> 3.1.7)
   byebug
+  execjs
   jwt
-  mysql2 (= 0.3.21)
+  mysql2 (>= 0.3.18, < 0.5)
   net-ldap
   puma (~> 3.0)
   rack-cors
   rails (~> 5.0.5)
   simple_command
   tzinfo-data
-  wash_out
 
 BUNDLED WITH
-   1.15.3
+   1.14.6

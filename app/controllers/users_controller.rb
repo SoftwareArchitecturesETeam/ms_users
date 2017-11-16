@@ -3,12 +3,12 @@ require 'net/ldap'
 class UsersController < ApplicationController
 before_action :set_user, only: [:show, :update, :destroy]
   #before_action :authenticate_user, except:[:index]
-  skip_before_action :authenticate_request, only:[:create, :connect, :index]
+  skip_before_action :authenticate_request, only:[:create, :connect]
 
   # GET /users
  def connect
    ldap = Net::LDAP.new(
-     host:'192.168.99.102',
+     host:'192.168.99.101',
      port: 389,
      auth: {
        method: :simple,
@@ -48,7 +48,7 @@ before_action :set_user, only: [:show, :update, :destroy]
     #     port: 389,
     #     auth: {
     #       method: :simple,
-    #       dn: 'cn=' + email +',ou=App,dc=arqsoft,dc=unal,dc=edu,dc=co',
+    #       dn: 'cn=' + email +',ou=App,dc=maplendar,dc=com',
     #       password: password
     #     }
     #   )
@@ -65,18 +65,18 @@ end
     render json: {message: "logout successful"}, status: :ok
   end
   # POST /users
-  def create
+  def createou=App
     @user = User.new(user_params)
 
     if @user.save
-      if connect()
+      if connect()ou=App
         puts "me conecte"
         ldap = Net::LDAP.new(
           host:'192.168.99.102',
           port: 389,
           auth: {
             method: :simple,
-            dn: "cn=admin, dc=maplendar, dc=com",
+            dn: "cn=admin, dc=maplendar,dc=com",
             password: "admin"
           }
         )
@@ -84,7 +84,7 @@ end
           pass = Net::LDAP::Password.generate(:md5, params[:user][:password])
 
           attr = { :cn => params[:user][:email],  :sn => params[:user][:first_name]   ,  :objectClass =>["inetOrgPerson","posixAccount","top" ] , :uid =>params[:user][:email] , :uidNumber => @user.id.to_s, :gidNumber =>"500" ,:homeDirectory => "/home/users/"+params[:user][:email] , :userpassword=> pass}
-          dn = "cn=" + params[:user][:email] + ",ou=App , dc=arqsoft,dc=unal, dc=edu, dc=co"
+          dn = "cn=" + params[:user][:email] + ",ou=App, dc=maplendar,dc=com"
           puts attr
           ldap.add(:dn => dn, :attributes => attr)
 
