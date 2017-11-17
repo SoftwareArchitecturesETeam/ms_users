@@ -65,11 +65,11 @@ end
     render json: {message: "logout successful"}, status: :ok
   end
   # POST /users
-  def createou=App
+  def create
     @user = User.new(user_params)
 
     if @user.save
-      if connect()ou=App
+      if connect()
         puts "me conecte"
         ldap = Net::LDAP.new(
           host:'openldap',
