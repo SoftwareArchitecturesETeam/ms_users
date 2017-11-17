@@ -1,9 +1,14 @@
 version: '2'
-db-users:
-  scale: 4
-ms-users:
-  scale: 4
-openldap:
-  scale: 1
-phpldapadmin:
-  scale: 1
+services:
+  db-users:
+    scale: 2
+    start_on_create: true
+  openldap:
+    scale: 1
+    start_on_create: true
+  phpldapadmin:
+    scale: 1
+    start_on_create: true
+  ms-users:
+    scale: 4
+    start_on_create: true

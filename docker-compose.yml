@@ -10,13 +10,6 @@ services:
       MYSQL_PASSWORD: 123
       MYSQL_DATABASE: db_users
       MYSQL_HOST: db-users
-  ms-users:
-    build: .
-    command: bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    ports:
-      - "3001:3000"
-    depends_on:
-      - db-users
   openldap:
     image: osixia/openldap:1.1.8
     container_name: openldap
@@ -57,12 +50,20 @@ services:
       - "636:636"
     hostname: "maplendar.com"
   phpldapadmin:
-      image: osixia/phpldapadmin:latest
-      container_name: phpldapadmin
-      environment:
-        PHPLDAPADMIN_LDAP_HOSTS: "openldap"
-        PHPLDAPADMIN_HTTPS: "false"
-      ports:
-        - "8085:80"
-      links:
-        - openldap
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8085:80"
+    depends_on:
+      - openldap
+  ms-users:
+    build: .
+    command: bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db-users
+      - openldap
