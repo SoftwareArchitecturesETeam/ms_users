@@ -14,9 +14,9 @@ services:
     image: osixia/openldap:1.1.8
     container_name: openldap
     environment:
-      COMPOSE_HTTP_TIMEOUT: 200
+      COMPOSE_HTTP_TIMEOUT: 200M
       LDAP_LOG_LEVEL: "256"
-      LDAP_ORGANISATION: "Maplendar"
+      LDAP_ORGANISATION: "maplendar"
       LDAP_DOMAIN: "maplendar.com"
       LDAP_BASE_DN: ""
       LDAP_ADMIN_PASSWORD: "admin"

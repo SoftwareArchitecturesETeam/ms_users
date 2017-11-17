@@ -8,7 +8,7 @@ before_action :set_user, only: [:show, :update, :destroy]
   # GET /users
  def connect
    ldap = Net::LDAP.new(
-     host:'192.168.99.101',
+     host:'openldap',
      port: 389,
      auth: {
        method: :simple,
@@ -72,7 +72,7 @@ end
       if connect()ou=App
         puts "me conecte"
         ldap = Net::LDAP.new(
-          host:'openldap.ms-users',
+          host:'openldap',
           port: 389,
           auth: {
             method: :simple,
