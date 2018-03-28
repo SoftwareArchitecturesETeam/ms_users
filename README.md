@@ -1,109 +1,123 @@
-#Test with: http://editor.swagger.io/
-
+## Test this with http://editor2.swagger.io/#!/
 swagger: '2.0'
 info:
-  version: 1.0.0
-  title: Authenticate Microservice
-  description: Ruby + MySQL Database
+  title: Authentication service
+  description: Ruby + MySQL database
+  version: "1.0.0"
   contact:
-      name: Liseth Briceño Albarracin
-      email: lgbricenoa@unal.edu.co
-  license:
-    name: Software Architecture 2017-II
+    name: Miguel Ballen
+    email: migaballengal@unal.edu.co
+  license: 
+    name: xxx
+# the domain of the service
 host: 192.168.99.101:3000
-basePath: /
+# array of all schemes that your API supports
 schemes:
-  - http
-consumes:
-  - application/json
+  - https
+# will be prefixed to all paths
+basePath: /
 produces:
   - application/json
 paths:
   /users:
     post:
       summary: Creates a new user
-      operationId: createUser
+      description: |
+        .
       parameters:
         - name: user
-          in: body
+          in: header
+          description: user object.
           required: true
-          description: User Object
-          schema:
-            $ref: '#/definitions/User'
+          type: number
+          format: double
+        
       responses:
-        '201':
+        200:
           description: Created
-        '400':
-          description: Bad Request
           schema:
-            $ref: '#/definitions/ErrorModel'
-        '500':
-          description: Internal Server Error
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+        default:
+          description: Unexpected error
           schema:
-            $ref: '#/definitions/ErrorModel'
-    
-    /authenticate:
+            $ref: '#/definitions/Error'
+  /authenticate:
     post:
-        summary: Authenticate a user
-        operationId: authenticateUser
-        parameters:
-        - email :user 
-        - password : user
-          in body
-          required: true 
-          description: User Object
+      summary: Authenticate user
+      description: |
+        .
+      parameters:
+        - name: email
+          in: query
+          description: user mail.
+          required: true
+          type: number
+          format: double
+        - name: password
+          in: query
+          description: user password.
+          required: true
+          type: number
+          format: double
+      responses:
+        200:
+          description: return token jwt
+        401:
+          description: invalid credentials
+        default:
+          description: Unexpected error
           schema:
-           $ref: '#/definitions/User'
-        responses:
-        '200':
-            description: return token jwt
-        '401':
-            description: invalid credentials
-    
-    /authorize:
-    
-        summary: Authorized a user
-        operationId: authorizateUser
-        parameters:
-        -Authorization : jwt 
-            in: headers
-            required: true
-            description: User Object
-            schema:
-            $ref: '#/definitions/User'
-        responses:
-        '200':
-            description: current_user
-        '401':
-            description: Unauthorized
-            
+            $ref: '#/definitions/Error'
+  /authorize:
+    get:
+      summary: authorize a user
+      description: .
+      parameters:
+        - name: jwt_authorization
+          in: header
+          description: .
+          required: true
+          type: number
+          format: double
+      responses:
+        200:
+          description: Current user
+        401: 
+          description: Unathorized
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  
 definitions:
   User:
     type: object
     properties:
-      id:
+      user_id:
         type: integer
       first_name:
         type: string
-      last_name:
+      last_name: 
         type: string
       age:
         type: number
       password_digest:
         type: string
-
   
-
-# Errors
-  ErrorModel:
+  
+  Error:
     type: object
-    required:
-      - message
-      - code
     properties:
+      code:
+        type: integer
+        format: int32
       message:
         type: string
-      code:
-        type: number
-      description:
-        type: object
+      fields:
+        type: string
