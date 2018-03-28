@@ -6,7 +6,7 @@ info:
   title: Authenticate Microservice
   description: Ruby + MySQL Database
   contact:
-      name: Liseth Briceño Albarracin
+      name: Liseth BriceÃ±o Albarracin
       email: lgbricenoa@unal.edu.co
   license:
     name: Software Architecture 2017-II
@@ -78,7 +78,6 @@ paths:
             description: Unauthorized
             
 definitions:
-# Products
   User:
     type: object
     properties:
