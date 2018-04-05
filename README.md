@@ -3,4 +3,5 @@
 Microservice featuring authentication and sign up in mysql using Ruby on Rails
 
 # API Specification
-Copy swagger.yaml file content and paste it inside http://editor2.swagger.io/#!/ to see full specification
+To see full specification go to
+https://app.swaggerhub.com/apis/mballeng91/ms_users/1.0.0 
