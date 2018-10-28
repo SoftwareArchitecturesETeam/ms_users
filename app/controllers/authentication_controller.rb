@@ -7,11 +7,14 @@ skip_before_action :authenticate_request
 			auth: {
 				method: :simple,
 				dn: "cn=admin, dc=maplendar, dc=com",
+			host:'openldap',
+			port: 389,
+			auth: {
+				method: :simple,
+				dn: "cn=admin, dc=maplendar,dc=com",
 				password: "admin"
 			}
 		)
-		puts "lo que retorna ldap.bind"
-		puts ldap.bind
 		return ldap.bind
 	end
 
@@ -19,11 +22,9 @@ skip_before_action :authenticate_request
 		email = params[:email].to_s
     password = params[:password].to_s
 		if connect()
-      puts "me conecte"
       ldap = Net::LDAP.new(
-
-        host: '192.168.99.101',
-        port: 5003,
+        host: 'openldap.ms-users',
+        port: 389,
         auth: {
           method: :simple,
           dn: 'cn=' + email +',ou=App,dc=maplendar,dc=com',

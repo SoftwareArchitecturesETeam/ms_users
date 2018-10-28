@@ -3,13 +3,13 @@ require 'net/ldap'
 class UsersController < ApplicationController
 before_action :set_user, only: [:show, :update, :destroy]
   #before_action :authenticate_user, except:[:index]
-  skip_before_action :authenticate_request, only:[:create, :connect, :index]
+  skip_before_action :authenticate_request, only:[:create, :connect]
 
   # GET /users
  def connect
    ldap = Net::LDAP.new(
-     host:'192.168.99.101',
-     port: 5003,
+     host:'openldap',
+     port: 389,
      auth: {
        method: :simple,
        dn: "cn=admin, dc=maplendar, dc=com",
@@ -44,11 +44,11 @@ before_action :set_user, only: [:show, :update, :destroy]
     #   puts "me conecte"
     #   ldap = Net::LDAP.new(
     #
-    #     host: '192.168.99.102',
+    #     host: 'openldap.ms-users',
     #     port: 389,
     #     auth: {
     #       method: :simple,
-    #       dn: 'cn=' + email +',ou=Shop,dc=arqsoft,dc=unal,dc=edu,dc=co',
+    #       dn: 'cn=' + email +',ou=App,dc=maplendar,dc=com',
     #       password: password
     #     }
     #   )
@@ -72,11 +72,11 @@ end
       if connect()
         puts "me conecte"
         ldap = Net::LDAP.new(
-          host:'192.168.99.101',
-          port: 5003,
+          host:'openldap',
+          port: 389,
           auth: {
             method: :simple,
-            dn: "cn=admin, dc=maplendar, dc=com",
+            dn: "cn=admin, dc=maplendar,dc=com",
             password: "admin"
           }
         )
@@ -85,7 +85,6 @@ end
 
           attr = { :cn => params[:user][:email],  :sn => params[:user][:first_name]   ,  :objectClass =>["inetOrgPerson","posixAccount","top" ] , :uid =>params[:user][:email] , :uidNumber => @user.id.to_s, :gidNumber =>"500" ,:homeDirectory => "/home/users/"+params[:user][:email] , :userpassword=> pass}
           dn = "cn=" + params[:user][:email] + ",ou=App , dc=maplendar,dc=com"
-          puts attr
           ldap.add(:dn => dn, :attributes => attr)
 
         end

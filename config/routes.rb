@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 	post 'authenticate', to: 'authentication#authenticate'
 	#resources :users
 	get 'search', to: 'users#search'
-  get 'logout', to: 'users#logout'
 
-  wash_out :wsusers
+    get 'logout', to: 'users#logout'
+
 
 end
