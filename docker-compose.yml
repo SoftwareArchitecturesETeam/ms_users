@@ -1,22 +1,24 @@
 version: '2'
 services:
-  db-users:
-    image: mysql
+  db_users:
+    image: mariadb
     ports:
       - "4001:3306"
+    expose:
+      - "4001"
     environment:
-      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: 1234
       MYSQL_USER: db_users_user
       MYSQL_PASSWORD: 123
-      MYSQL_DATABASE: db_users
-      MYSQL_HOST: db-users
+      MYSQL_DATABASE: db_users_database
+      MYSQL_HOST: db_users
   openldap:
     image: osixia/openldap:1.1.8
     container_name: openldap
     environment:
       COMPOSE_HTTP_TIMEOUT: 200M
       LDAP_LOG_LEVEL: "256"
-      LDAP_ORGANISATION: "maplendar"
+      LDAP_ORGANISATION: "MapLendar"
       LDAP_DOMAIN: "maplendar.com"
       LDAP_BASE_DN: ""
       LDAP_ADMIN_PASSWORD: "admin"
@@ -46,7 +48,7 @@ services:
       - /etc/ldap/slapd.d
       - /container/service/slapd/assets/certs/
     ports:
-      - "389:389"
+      - "5003:389"
       - "636:636"
     hostname: "maplendar.com"
   phpldapadmin:
@@ -57,13 +59,17 @@ services:
       PHPLDAPADMIN_HTTPS: "false"
     ports:
       - "8085:80"
+    expose:
+      - "8085"
     depends_on:
       - openldap
-  ms-users:
+  ms_users:
     build: .
-    command: bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
       - "3001:3000"
+    expose:
+      - "3001"
     depends_on:
-      - db-users
+      - db_users
       - openldap

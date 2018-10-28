@@ -84,8 +84,7 @@ end
           pass = Net::LDAP::Password.generate(:md5, params[:user][:password])
 
           attr = { :cn => params[:user][:email],  :sn => params[:user][:first_name]   ,  :objectClass =>["inetOrgPerson","posixAccount","top" ] , :uid =>params[:user][:email] , :uidNumber => @user.id.to_s, :gidNumber =>"500" ,:homeDirectory => "/home/users/"+params[:user][:email] , :userpassword=> pass}
-          dn = "cn=" + params[:user][:email] + ",ou=App, dc=maplendar,dc=com"
-          puts attr
+          dn = "cn=" + params[:user][:email] + ",ou=App , dc=maplendar,dc=com"
           ldap.add(:dn => dn, :attributes => attr)
 
         end

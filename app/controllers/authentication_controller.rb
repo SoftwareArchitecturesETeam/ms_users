@@ -2,6 +2,11 @@ class AuthenticationController < ApplicationController
 skip_before_action :authenticate_request
 	def connect
 		ldap = Net::LDAP.new(
+			host:'192.168.99.101',
+			port: 5003,
+			auth: {
+				method: :simple,
+				dn: "cn=admin, dc=maplendar, dc=com",
 			host:'openldap',
 			port: 389,
 			auth: {
@@ -10,8 +15,6 @@ skip_before_action :authenticate_request
 				password: "admin"
 			}
 		)
-		puts "lo que retorna ldap.bind"
-		puts ldap.bind
 		return ldap.bind
 	end
 
@@ -19,9 +22,7 @@ skip_before_action :authenticate_request
 		email = params[:email].to_s
     password = params[:password].to_s
 		if connect()
-      puts "me conecte"
       ldap = Net::LDAP.new(
-
         host: 'openldap.ms-users',
         port: 389,
         auth: {
