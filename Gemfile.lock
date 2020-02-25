@@ -69,7 +69,7 @@ GEM
     mysql2 (0.4.10)
     net-ldap (0.16.1)
     nio4r (2.5.2)
-    nokogiri (1.10.4)
+    nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     puma (3.12.1)
     rack (2.0.7)
